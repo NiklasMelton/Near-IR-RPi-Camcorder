@@ -47,6 +47,7 @@ class Camcorder:
     def __init__(self):
         self.camera = PiCamera()
         awb(self.camera)
+        print('AWB complete')
         self.camera.rotation = 180
         self.button_pin = 26
         # self.led_pin = 19
