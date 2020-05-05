@@ -45,7 +45,8 @@ class Camcorder:
         self.camera = PiCamera()
         self.camera.rotation = 180
         self.button_pin = 26
-        self.led_pin = 19
+        # self.led_pin = 19
+        self.led_pin = 13
         GPIO.setup(self.button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         GPIO.add_event_detect(self.button_pin, GPIO.FALLING, callback=self.button_callback, bouncetime=300)
         self.blinker = Blinker(self.led_pin)
