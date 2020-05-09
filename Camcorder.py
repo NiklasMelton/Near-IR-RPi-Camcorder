@@ -96,7 +96,7 @@ def shutdown_blink(pin=23):
         GPIO.output(pin, True)
         time.sleep(0.3)
         GPIO.output(pin, False)
-        time.sleep(0.3)
+        time.sleep(3)
 
 def wake_blink(pin=23):
     GPIO.setup(pin, GPIO.OUT)
