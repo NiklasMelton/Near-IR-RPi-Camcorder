@@ -48,7 +48,7 @@ class Camcorder:
         self.camera = PiCamera()
         awb(self.camera)
         print('AWB complete')
-        self.camera.rotation = 180
+        # self.camera.rotation = 180
         self.button_pin = 26
         # self.led_pin = 19
         self.led_pin = 13
