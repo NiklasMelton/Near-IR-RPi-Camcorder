@@ -41,6 +41,7 @@ class distributed_camcorder:
         # time.sleep(5)
         # os.popen("ifconfig wlan0 up")
         self.access_point = pyaccesspoint.AccessPoint(ssid='PiCam-Net',password='spectral')
+        self.access_point.stop()
         self.access_point.start()
         time.sleep(5)
         return self.access_point.is_running()
