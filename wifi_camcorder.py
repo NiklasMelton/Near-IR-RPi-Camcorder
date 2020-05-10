@@ -16,8 +16,8 @@ class distributed_camcorder:
     def __init__(self):
         self.access_point = None
         self.type = 'client'
-        self.red_led = Blinker(13,hz=0.5)
-        self.green_led = Blinker(19,hz=0.25)
+        self.red_led = Blinker(13,hz=0.2)
+        self.green_led = Blinker(19,hz=0.4)
         self.green_led.start()
         self.red_led.start()
         self.red_led.resume()
@@ -46,7 +46,13 @@ class distributed_camcorder:
 
     def configure_network(self):
         ontest = os.popen("ping -c 1 192.168.45.1").read()
-        if ontest == '':
+        transmission = [x for x in ontest.split('\n') if 'packets transmitted' in x]
+        if transmission:
+            _, _, loss, _ = transmission[0].split(', ')
+            transmission_rate = 1. - float(loss.split('%')[0]) / 100.
+        else:
+            transmission_rate = 0.0
+        if transmission_rate == 0.:
             print("No network available. Creating new network")
             if self.create_access_point():
                 self.type = 'server'
@@ -55,12 +61,6 @@ class distributed_camcorder:
                 print('Failed to create network. Defaulting to client')
                 return False
         else:
-            transmission = [x for x in ontest.split('\n') if 'packets transmitted' in x]
-            if transmission:
-                _,_,loss,_ = transmission[0].split(', ')
-                transmission_rate = 1-float(loss.split('%')[0])/100.
-            print(ontest)
-            print('loss:',loss)
             print('Transmission Rate:',transmission_rate)
             print("Connected successfully!")
         return True
