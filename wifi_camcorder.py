@@ -1,5 +1,5 @@
 import os
-from PyAccessPoint import pyaccesspoint
+import pyaccesspoint
 import time
 import RPi.GPIO as GPIO
 from picamera import PiCamera
