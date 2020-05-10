@@ -17,15 +17,14 @@ class distributed_camcorder:
         self.access_point = None
         self.type = 'client'
         self.red_led = Blinker(13,hz=0.5)
-        self.green_led = Blinker(19,hz=0.5)
+        self.green_led = Blinker(19,hz=0.25)
         self.green_led.start()
         self.red_led.start()
         self.red_led.resume()
-        time.sleep(0.25)
         self.green_led.resume()
         time.sleep(5)
-        self.green_led.stop()
-        self.red_led.stop()
+        self.green_led.pause()
+        self.red_led.pause()
 
         if self.configure_network():
             led = self.green_led
@@ -34,7 +33,7 @@ class distributed_camcorder:
         led.change_freq(0.2)
         led.resume()
         time.sleep(3)
-        led.stop()
+        led.pause()
 
 
     def create_access_point(self):
