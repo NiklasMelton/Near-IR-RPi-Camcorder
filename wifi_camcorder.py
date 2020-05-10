@@ -37,10 +37,12 @@ class distributed_camcorder:
 
 
     def create_access_point(self):
-        os.popen("ifconfig wlan0 down")
-        time.sleep(10)
-        self.access_point = pyaccesspoint.AccessPoint(ssid='PiCam-net',password='spectral')
+        # os.popen("ifconfig wlan0 down")
+        # time.sleep(5)
+        # os.popen("ifconfig wlan0 up")
+        self.access_point = pyaccesspoint.AccessPoint(ssid='PiCam-Net',password='spectral')
         self.access_point.start()
+        time.sleep(5)
         return self.access_point.is_running()
 
     def configure_network(self):
