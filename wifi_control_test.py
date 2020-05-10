@@ -1,4 +1,17 @@
 import os
+from PyAccessPoint import pyaccesspoint
+import time
+
+def create_access_point():
+    access_point = pyaccesspoint.AccessPoint(ssid='PiCam-net',password='spectral')
+    access_point.start()
+    time.sleep(5)
+    if access_point.is_running():
+        print('access point up')
+        time.sleep(60)
+    print('shutting down access point')
+    access_point.stop()
+
 
 if __name__ == '__main__':
     user = os.popen("whoami").read()
@@ -23,3 +36,7 @@ if __name__ == '__main__':
         print
         "Looks like we didn't find any networks in your area. Exiting..."
         quit()
+    network = 'MeltonHome'
+    tpass = ''
+    connectstatus = os.popen("iwconfig " + winame + " essid " + network + " key s:" + tpass)
+    print("Connecting...")
