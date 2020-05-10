@@ -55,7 +55,13 @@ class distributed_camcorder:
                 print('Failed to create network. Defaulting to client')
                 return False
         else:
-            print(ontest.split('\n'))
+            transmission = [x for x in ontest.split('\n') if 'packets transmitted' in x]
+            if transmission:
+                _,_,loss,_ = transmission[0].split(', ')
+                transmission_rate = 1-float(loss.split('%')[0])/100.
+            print(ontest)
+            print('loss:',loss)
+            print('Transmission Rate:',transmission_rate)
             print("Connected successfully!")
         return True
 
