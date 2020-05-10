@@ -68,5 +68,5 @@ class distributed_camcorder:
 
 if __name__ == '__main__':
     distributed_camcorder()
-    time.sleep(300)
+    time.sleep(200)
     os.popen("shutdown 0")
