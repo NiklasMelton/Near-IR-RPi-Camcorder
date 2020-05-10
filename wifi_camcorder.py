@@ -16,8 +16,8 @@ class distributed_camcorder:
     def __init__(self):
         self.access_point = None
         self.type = 'client'
-        self.red_led = Blinker(13,hz=0.2)
-        self.green_led = Blinker(19,hz=0.4)
+        self.red_led = Blinker(13,hz=5)
+        self.green_led = Blinker(19,hz=2.5)
         self.green_led.start()
         self.red_led.start()
         self.red_led.resume()
@@ -37,11 +37,10 @@ class distributed_camcorder:
 
 
     def create_access_point(self):
-        # os.popen("ifconfig wlan0 down")
-        # time.sleep(5)
+        os.popen("ifconfig wlan0 down")
+        time.sleep(10)
         self.access_point = pyaccesspoint.AccessPoint(ssid='PiCam-net',password='spectral')
         self.access_point.start()
-        time.sleep(3)
         return self.access_point.is_running()
 
     def configure_network(self):
