@@ -265,12 +265,15 @@ class AccessPoint:
 
     def start(self):
         if not self._check_dependencies():
+            print('dependencies')
             return False
 
         if not self._check_parameters():
+            print('parameters')
             return False
 
         if self.is_running():
+            print('already running')
             logging.debug("Already started")
             return True
 
