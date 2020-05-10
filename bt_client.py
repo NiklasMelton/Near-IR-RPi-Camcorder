@@ -1,5 +1,5 @@
 import sys
-
+import RPi.GPIO as GPIO
 import bluetooth
 
 
@@ -33,9 +33,6 @@ sock.connect((host, port))
 
 print("Connected. Type something...")
 while True:
-    data = input()
-    if not data:
-        break
-    sock.send(data)
+    sock.send('blink')
 
 sock.close()
