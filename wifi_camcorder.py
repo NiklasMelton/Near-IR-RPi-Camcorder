@@ -55,7 +55,7 @@ class distributed_camcorder:
                 print('Failed to create network. Defaulting to client')
                 return False
         else:
-            print(ontest)
+            print(ontest.split('\n'))
             print("Connected successfully!")
         return True
 
