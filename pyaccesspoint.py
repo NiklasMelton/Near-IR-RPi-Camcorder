@@ -127,11 +127,15 @@ class AccessPoint:
 
     def _pre_start(self):
         try:
+            print('killing wpa')
             self._execute_shell('killall wpa_supplicant')
+            print('radio off')
 
             result = self._execute_shell('nmcli radio wifi off')
             if "error" in result.lower():
                 self._execute_shell('nmcli nm wifi off')
+            print(result)
+            print('rfkill')
             self._execute_shell('rfkill unblock wlan')
             self._execute_shell('sleep 1')
         except Exception as E:
@@ -140,6 +144,7 @@ class AccessPoint:
 
     def _start_router(self):
         self._pre_start()
+        print('ifconfig up')
         s = 'ifconfig ' + self.wlan + ' up ' + self.ip + ' netmask ' + self.netmask
         logging.debug('created interface: mon.' + self.wlan + ' on IP: ' + self.ip)
         r = self._execute_shell(s)
@@ -149,6 +154,7 @@ class AccessPoint:
         self._execute_shell('sleep 2')
         i = self.ip.rindex('.')
         ipparts = self.ip[0:i]
+        print('forwarding')
 
         # enable forwarding in sysctl.
         logging.debug('enabling forward in sysctl.')
@@ -171,11 +177,12 @@ class AccessPoint:
                 'iptables -A FORWARD -i {} -o {} -j ACCEPT -m state --state RELATED,ESTABLISHED'
                     .format(self.inet, self.wlan))
             self._execute_shell('iptables -A FORWARD -i {} -o {} -j ACCEPT'.format(self.wlan, self.inet))
+        print('allow traffic')
 
         # allow traffic to/from wlan
         self._execute_shell('iptables -A OUTPUT --out-interface {} -j ACCEPT'.format(self.wlan))
         self._execute_shell('iptables -A INPUT --in-interface {} -j ACCEPT'.format(self.wlan))
-
+        print('start dns masq')
         # start dnsmasq
         s = 'dnsmasq --dhcp-authoritative --interface={} --dhcp-range={}.20,{}.100,{},4h'\
             .format(self.wlan, ipparts, ipparts, self.netmask)
