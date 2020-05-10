@@ -40,3 +40,8 @@ if __name__ == '__main__':
     tpass = ''
     connectstatus = os.popen("iwconfig " + winame + " essid " + network + " key s:" + tpass)
     print("Connecting...")
+    ontest = os.popen("ping -c 1 google.com").read()
+    if ontest == '':
+        print("Connection failed. (Bad pass?)")
+        exit()
+    print("Connected successfully!")
