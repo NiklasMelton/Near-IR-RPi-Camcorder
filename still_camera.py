@@ -12,7 +12,7 @@ class Camera:
     def __init__(self):
         self.camera = PiCamera(resolution=(1280, 720))
         self.camera.rotation = 0
-        self.camera.iso = 100
+        self.camera.iso = 400
         self.camera.exposure_mode = 'auto'
         self.button_pin = 26
         self.green_pin = 19
