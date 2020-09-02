@@ -49,7 +49,7 @@ class Camera:
         while GPIO.input(channel) == 0:  # Wait for the button up
             pass
         buttonTime = time.time() - start_time  # How long was the button down?
-        if buttonTime < 2 and not self.lock:
+        if 0.05 < buttonTime < 2 and not self.lock:
             print('Button Press',buttonTime)
             self.lock = True
             self.capture()
