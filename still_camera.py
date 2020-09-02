@@ -50,9 +50,10 @@ class Camera:
             pass
         buttonTime = time.time() - start_time  # How long was the button down?
         if buttonTime < 2 and not self.lock:
+            print('Button Press')
             self.lock = True
             self.capture()
-            time.sleep(0.25)
+            time.sleep(0.5)
             self.lock = False
         if buttonTime >= 2:
             shutdown_blink(self.led_pin)
