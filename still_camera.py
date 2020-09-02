@@ -37,7 +37,7 @@ class Camera:
         if not os.path.exists(date_path):
             os.makedirs(date_path)
         date_time = today.strftime("%H_%M_%S")
-        file_name = os.path.join(date_path, 'near_IR_'+date_time+'.h264')
+        file_name = os.path.join(date_path, 'near_IR_'+date_time+'.png')
         print('saving to file ',file_name)
         GPIO.output(self.led_pin, False)
         self.camera.capture(file_name)
