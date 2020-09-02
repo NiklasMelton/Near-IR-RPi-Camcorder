@@ -41,7 +41,6 @@ class Camera:
         print('saving to file ',file_name)
         GPIO.output(self.led_pin, False)
         self.camera.capture(file_name)
-        time.sleep(0.5)
         GPIO.output(self.led_pin, True)
         self.lock = False
 
