@@ -52,6 +52,7 @@ class Camera:
         if buttonTime < 2 and not self.lock:
             self.lock = True
             self.capture()
+            time.sleep(0.25)
             self.lock = False
         if buttonTime >= 2:
             shutdown_blink(self.led_pin)
