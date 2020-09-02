@@ -31,7 +31,6 @@ class Camera:
             os.makedirs(self.record_dir)
 
     def capture(self):
-        self.lock = True
         today = datetime.datetime.today()
         date_path = os.path.join(self.record_dir,today.strftime("%m_%d_%Y"))
         if not os.path.exists(date_path):
@@ -42,7 +41,7 @@ class Camera:
         GPIO.output(self.led_pin, False)
         self.camera.capture(file_name)
         GPIO.output(self.led_pin, True)
-        self.lock = False
+
 
 
     def button_callback(self, channel):
@@ -51,7 +50,9 @@ class Camera:
             pass
         buttonTime = time.time() - start_time  # How long was the button down?
         if buttonTime < 2 and not self.lock:
+            self.lock = True
             self.capture()
+            self.lock = False
         if buttonTime >= 2:
             shutdown_blink(self.led_pin)
             shutdown()
