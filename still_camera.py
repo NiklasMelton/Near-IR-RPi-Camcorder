@@ -31,7 +31,7 @@ class Camera:
 
         self.lock = False
 
-        self.record_dir = 'cam/'
+        self.record_dir = '/home/pi/cam/'
         if not os.path.exists(self.record_dir):
             os.makedirs(self.record_dir)
 
