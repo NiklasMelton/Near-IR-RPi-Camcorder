@@ -14,6 +14,7 @@ class Camera:
         self.camera.rotation = 0
         self.camera.iso = 400
         self.camera.exposure_mode = 'auto'
+        self.camera.shutter_speed = 0
         self.button_pin = 26
         self.green_pin = 19
         self.red_pin = 13
