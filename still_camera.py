@@ -11,18 +11,21 @@ GPIO.setmode(GPIO.BCM)
 class Camera:
     def __init__(self):
         self.camera = PiCamera(resolution=(1280, 720))
-        self.camera.rotation = 180
+        self.camera.rotation = 0
+        self.camera.iso = 100
         self.button_pin = 26
-        # self.led_pin = 19
-        self.led_pin = 13
+        self.green_pin = 19
+        self.red_pin = 13
         GPIO.setup(self.button_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-        GPIO.setup(self.led_pin, GPIO.OUT)
-        GPIO.output(self.led_pin, False)
+        GPIO.setup(self.red_pin, GPIO.OUT)
+        GPIO.setup(self.green_pin, GPIO.OUT)
+        GPIO.output(self.red_pin, False)
+        GPIO.output(self.green_pin, False)
         GPIO.add_event_detect(self.button_pin, GPIO.FALLING, callback=self.button_callback, bouncetime=300)
         self.camera.start_preview()
         # Camera warm-up time
         time.sleep(2)
-        GPIO.output(self.led_pin, True)
+        GPIO.output(self.red_pin, True)
 
         self.lock = False
 
@@ -38,9 +41,11 @@ class Camera:
         date_time = today.strftime("%H_%M_%S")
         file_name = os.path.join(date_path, 'near_IR_'+date_time+'.png')
         print('saving to file ',file_name)
-        GPIO.output(self.led_pin, False)
+        GPIO.output(self.red_pin, False)
+        GPIO.output(self.green_pin, True)
         self.camera.capture(file_name)
-        GPIO.output(self.led_pin, True)
+        GPIO.output(self.red_pin, True)
+        GPIO.output(self.green_pin, False)
 
 
 
@@ -56,7 +61,7 @@ class Camera:
             time.sleep(0.5)
             self.lock = False
         if buttonTime >= 2:
-            shutdown_blink(self.led_pin)
+            shutdown_blink(self.red_pin)
             shutdown()
 
 
